@@ -1,7 +1,8 @@
+import { useCallback } from "react";
 import connect from "./connect";
 
 const useSetDBData = () => {
-  const setData = async (data) => {
+  const setDataIntoDB = async (data) => {
     const db = await connect();
     if (db) {
       const transaction = db.transaction("Profiling", "readwrite");
@@ -9,6 +10,7 @@ const useSetDBData = () => {
       action.add(data);
     }
   };
+  const setData = useCallback(setDataIntoDB, []);
   return { setData };
 };
 

@@ -1,8 +1,8 @@
 import connect from "./connect";
-
+import { useCallback } from "react";
 const useGetDBData = () => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const getData = async (input) => {
+  const getDataFromDB = async (input) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const db = await connect();
     let data, index;
     const transaction = db.transaction("Profiling", "readonly");
@@ -21,12 +21,14 @@ const useGetDBData = () => {
       });
       if (cursor) {
         data = cursor.value;
+        cursor.continue();
       }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
     return data;
   };
+  const getData = useCallback(getDataFromDB, []);
   return { getData };
 };
 
