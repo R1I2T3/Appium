@@ -4,6 +4,7 @@ from typing import Any,Dict
 from appium.options.common import  AppiumOptions
 from appium.webdriver.common.appiumby import  AppiumBy
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import base64
 import io
 from PIL import  Image
@@ -14,12 +15,13 @@ def ShowCaller(number):
             'platformName':'Android',
             'automationName':"UIAutomator2",
             "deviceName":'Android',
-            # 'appPackage':'com.allinone.callerid',
-            # 'appActivity':'com.allinone.callerid.mvc.controller.MainActivity'
+            "appium:ignoreHiddenApiPolicyError": "true",
+            "appium:udid":'emulator-5554',
         }
         url='http://localhost:4473'
         # Initializing driver and oprning of app
         driver = webdriver.Remote(url,options=AppiumOptions().load_capabilities(cap))
+        wait = WebDriverWait(driver, 10)
         # Opening of app.
         app = driver.find_element(by=AppiumBy.ACCESSIBILITY_ID,value='Showcaller')
         app.click()
@@ -28,17 +30,15 @@ def ShowCaller(number):
         driver.find_element(by=AppiumBy.ID,value='com.allinone.callerid:id/flayout_btn').click()
         driver.implicitly_wait(3)
         driver.find_element(by=AppiumBy.XPATH,value='//android.widget.FrameLayout[@resource-id="com.allinone.callerid:id/flayout_btn"]').click()
-        driver.implicitly_wait(5)
-        btn=driver.find_element(by=AppiumBy.XPATH,value='//android.widget.FrameLayout[@resource-id="com.allinone.callerid:id/flayout_btn"]')
+        btn=wait.until(EC.element_to_be_clickable(driver.find_element(by=AppiumBy.XPATH,value='//android.widget.FrameLayout[@resource-id="com.allinone.callerid:id/flayout_btn"]')))
         btn.click()
         try:
             # search lable
-            searchLabel = driver.find_element(by=AppiumBy.ACCESSIBILITY_ID,value='search')
+            searchLabel = wait.until(EC.element_to_be_clickable(driver.find_element(by=AppiumBy.ACCESSIBILITY_ID,value='search')))
             searchLabel.click()
-            driver.implicitly_wait(10)
             try:
                 # changing region
-                change_country= driver.find_element(by=AppiumBy.ACCESSIBILITY_ID,value='Switch country code')
+                change_country= wait.until(EC.element_to_be_clickable(driver.find_element(by=AppiumBy.ACCESSIBILITY_ID,value='Switch country code')))
                 change_country.click()
                 downMenu =driver.find_element(by=AppiumBy.ACCESSIBILITY_ID,value='down')
                 downMenu.click()
