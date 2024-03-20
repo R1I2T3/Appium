@@ -65,6 +65,7 @@ def ShowCaller(number):
                       encoded_image=base64.b64encode(imagebytes.getvalue()).decode("utf-8")
                       driver.implicitly_wait(5)
                       info={"name":name.text,"location":location.text,"encoded image":encoded_image}
+                      return info
                    except Exception as e:
                        print("Some error happend: ",e)
                 except Exception as e:
@@ -75,9 +76,9 @@ def ShowCaller(number):
             print("Search lable is not found")
     except Exception as e:
         print("Can't open app because: ",e)
-    driver.terminate_app('com.allinone.callerid')
-    driver.quit()
-    return  info
+    finally:
+           driver.terminate_app('com.allinone.callerid')
+           driver.quit()
 if __name__ == "__main__":
     # Get user input for the 10-digit number
     user_input = input("Enter a 10-digit number: ")

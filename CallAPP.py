@@ -38,8 +38,10 @@ def CallApp(number):
                    except:
                        searchIcon = wait.until(EC.element_to_be_clickable(driver.find_element(by=AppiumBy.XPATH,value='(//android.widget.ImageView[@resource-id="com.callapp.contacts:id/buttonIcon"])[1]')))
                        searchIcon.click()
+                   time.sleep(2)
                    name=driver.find_element(by=AppiumBy.ID,value='com.callapp.contacts:id/nameText')
-                   location=driver.find_element(by=AppiumBy.XPATH,value='//android.widget.TextView[@resource-id="com.callapp.contacts:id/item_title" and @text="India"]')
+                   # location=driver.find_element(by=AppiumBy.XPATH,value='//android.widget.TextView[@resource-id="com.callapp.contacts:id/item_title" and @text="India"]')
+                   # print(location.text)
                    provider = driver.find_element(by=AppiumBy.ID,value='com.callapp.contacts:id/item_subtitle')
                    avatar=wait.until(EC.element_to_be_clickable(driver.find_element(by=AppiumBy.XPATH,value='(//android.widget.ImageView[@resource-id="com.callapp.contacts:id/contactImage"])[1]')))
                    scrreenshot=avatar.screenshot_as_png
@@ -48,8 +50,7 @@ def CallApp(number):
                    ss.save(imagebytes,format="PNG")
                    imagebytes.seek(0)
                    encoded_image=base64.b64encode(imagebytes.getvalue()).decode("utf-8")
-                   driver.implicitly_wait(5)
-                   info={"name":name.text,"location":location.text,"provider":provider.text,"encoded image":encoded_image}
+                   info={"name":name.text,"provider":provider.text,"encoded image":encoded_image}
                    return  info
                 except:
                    print("Person with following phone number not found")
