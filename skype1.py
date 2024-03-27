@@ -22,12 +22,12 @@ def Skype(email):
         try:
             WebDriverWait(driver,wait).until(EC.visibility_of_element_located((By.XPATH,'//*[@id="i0116"]')))
             signin_email = driver.find_element(By.XPATH,'//*[@id="i0116"]')
-            signin_email.send_keys('riteshjha082@gmail.com')
+            signin_email.send_keys('johndoe@gmail.com') #here replace john doe with your microsoft account email id
             signin_email_next_button = driver.find_element(By.XPATH,'//*[@id="idSIButton9"]')
             signin_email_next_button.click()
             WebDriverWait(driver, wait).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="i0118"]')))
             singin_password = driver.find_element(By.XPATH,'//*[@id="i0118"]')
-            singin_password.send_keys('Rit_20_04@/')
+            singin_password.send_keys('12345678') # Here replace this with your microsoft account password
             signin_password_next_button = driver.find_element(By.XPATH,'//*[@id="idSIButton9"]')
             signin_password_next_button.click()
             try:
